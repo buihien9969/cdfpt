@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="5.css">
+</head>
+
+<body>
+    <div class="main">
+        <div id="slide-container">
+            <div class="slide">
+                <img src="image/banner/New folder/1.jpg">
+            </div>
+            <div class="slide">
+                <img src="image/banner/New folder/2.jpg">
+            </div>
+            <div class="slide">
+                <img src="image/banner/New folder/3.jpg">
+            </div>
+            <div class="slide">
+                <img src="image/banner/New folder/4.jpg">
+            </div>
+            <div class="slide">
+                <img src="image/banner/New folder/5.jpg">
+            </div>
+        </div>
+
+        <div id="controls">
+            <button onclick="prevSlide()">Prev</button>
+            <button onclick="nextSlide()">Next</button>
+            <button onclick="autoPlay()">Auuto</button>
+            <span id="ppp"></span>
+            <button onclick="stopPlay()">Stop</button>
+        </div>
+
+        <div id="form">
+            <h2>ĐĂNG KÝ KHOÁ HỌC ONLINE</h2>
+            <label for="name">Họ tên</label>
+            <input type="text" id="name" name="name">
+            <span class="thongBao"></span>
+            <br><br>
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+            <span class="thongBao"></span>
+            <br><br>
+
+            <label for="phone">Số điện thoại</label>
+            <input type="number" id="phone" name="phone">
+            <span class="thongBao"></span>
+            <br><br>
+
+            <label for="khoaHoc">Khoá học</label>
+            <select id="khoaHoc" name="khoaHoc">
+                <option value="html">html</option>
+                <option value="css">css</option>
+                <option value="Javascript">Javascript</option>
+            </select>
+            <span class="thongBao"></span>
+            <br><br>
+
+            <label for="hocPhi">Học phí</label>
+            <input type="text" id="hocPhi" name="hocPhi">
+            <span class="thongBao"></span>
+            <br><br>
+
+            <label>Hình thức học</label>
+            <input type="radio" name="truong" value="truong" id="truong">Tại trường
+            <input type="radio" name="online" value="online" id="online">Học online
+            <span class="thongBao"></span>
+            <br><br>
+
+            <input type="submit" value="Đăng ký" onclick="submitbutt()">
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script>
+    var slideIndex = 0;
+    var slide = document.getElementsByClassName("slide");
+    var poin = document.getElementById("ppp");
+    var autoSlide;
+
+    function showSlide(n) {
+        if (n >= slide.length) {
+            slideIndex = 0;
+        }
+        if (n < 0) {
+            slideIndex = slide.length - 1;
+        }
+        for (let i = 0; i < slide.length; i++) {
+            slide[i].style.display = "none";
+        }
+        slide[slideIndex].style.display = "block";
+
+        var slide_position = slideIndex + 1;
+        poin.textContent = slide_position + "/" + 5;
+    }
+    function nextSlide() {
+        slideIndex++;
+        showSlide(slideIndex);
+    }
+    function prevSlide() {
+        slideIndex--;
+        showSlide(slideIndex);
+    }
+    function autoPlay() {
+        nextSlide();
+        autoSlide = setInterval(nextSlide, 1999);
+    }
+    function stopPlay() {
+        clearInterval(autoSlide)
+    }
+    showSlide(slideIndex);
+
+    function submitbutt() {
+        let name = document.getElementById("name");
+        let email = document.getElementById("email");
+        let phone = document.getElementById("phone");
+        let khoaHoc = document.getElementById("khoaHoc");
+        let hocPhi = document.getElementById("hocPhi");
+        let truong = document.getElementById("truong");
+        let online = document.getElementById("online");
+        let regexEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        let regexPhone = /^[0-9\-\+]{9,15}$/;
+        let thongBao = document.getElementsByClassName("thongBao");
+        for (let e = 0; e < thongBao.length; e++) {
+            thongBao[e].innerHTML = "";
+        }
+        let flag = false;
+
+        if (name.value == "" || name.value == null) {
+            // thongBao[0].innerHTML = "";
+            thongBao[0].innerHTML = "Vui long dien ten";
+        }
+
+        if (email.value == "" || email.value == null) {
+            // thongBao[1].innerHTML = "";
+            thongBao[1].innerHTML = "Vui long nhap Email";
+        }
+        else {
+            if (!regexEmail.test(email.value)) {
+                // thongBao[1].innerHTML = "";
+                thongBao[1].innerHTML = 'Không đúng định dạng';
+            }
+            else {
+                // thongBao[1].innerHTML = "";
+                thongBao[1].innerHTML = "email okw";
+            }
+        }
+        if (phone.value == "" || phone.value == null) {
+            // thongBao[2].innerHTML = '';
+            thongBao[2].innerHTML = "Điền phone";
+        }
+        else {
+            if (!regexPhone.test(phone.value)) {
+                // thongBao[2].innerHTML = "";
+                thongBao[2].innerHTML = "Phone ko hop le";
+            }
+            else {
+                // thongBao[2].innerHTML = "";
+                thongBao[2].innerHTML = "Phone okw";
+
+            }
+
+        }
+        if (khoaHoc.value == "Javascript") {
+            // hocPhi.value = "";
+            hocPhi.value = `500`;
+        }
+        else if (khoaHoc.value == "html") {
+            // hocPhi.value = "";
+            hocPhi.value = '33333'
+        }
+        else {
+            // hocPhi.value = "";
+            hocPhi.value = '666666666';
+        }
+
+        if (truong.checked && online.checked) {
+            console.log('chon 1');
+            return thongBao[5].innerHTML = 'Chon 1 trong 2'
+        }
+        else if (truong.checked) {
+            thongBao[5].innerHTML = 'truong';
+        }
+        else if (online.checked) {
+            thongBao[5].innerHTML = 'online';
+        }
+        else {
+            thongBao[5].innerHTML = 'chon lay 1 truong';
+        }
+        if (!flag) {
+            console.log("Okeeeew");
+        }
+
+    }
+
+
+
+
+
+
+</script>
